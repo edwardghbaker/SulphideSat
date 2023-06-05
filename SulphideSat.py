@@ -2,8 +2,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-#from ChemCal_v2 import CC
+from ChemCal_v2 import CC
 #from ThermoEngine.thermoengine.thermoengine import phases
+
+#%%
+EC_wt = pd.DataFrame(index = ['O','Si','Mg','Al','Ca','Fe','Ti','Mn','Cr','Na','K'],
+                            data = [48.0,29.7,19.5,1.36,0.17,0.33,0.01,0.03,0.13,1.04,0.09],
+                            columns = ['Wt. %'])
 
 #%%
 
@@ -33,19 +38,6 @@ class SCSS:
             self.C = self.computeC()
             self.S_ppm_sat = self.computeSCSS()
 
-    
-
-    def computeActivities(self):
-        '''
-        '''
-
-
-
-
-        
-
-        return Am
-
 
     def computeSCSS(self):
         '''
@@ -71,7 +63,6 @@ def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0):
      '''
      This function computes the sulphide capacity (ppm) for a given composition. As reported by O'neill, Hugh S. T. C., and John A. Mavrogenes. 2002. “The Sulfide Capacity and the Sulfur Content at Sulfide Saturation of Silicate Melts at 1400°C and 1 Bar.” Journal of Petrology 43 (6): 1049-87.
      
-
      this relationship is derived from 1atm experiments done at 1400C. The composition is in wt. %.
      '''
 
@@ -91,3 +82,5 @@ def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0):
      
 
 
+
+# %%

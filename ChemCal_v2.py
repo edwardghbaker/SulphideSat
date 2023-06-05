@@ -123,7 +123,7 @@ class CC:
             
         
     def at2ox_wt(self,atIndex=None,Atomic=None):
-        if atIndex == None or Atomic == None:
+        if any(atIndex) == None or any(Atomic) == None:
             atIndex = self.input_DF.index
             Atomic = self.input_DF['At. %']
         atIndex = atIndex.drop('O')
@@ -153,7 +153,7 @@ class CC:
    
     def get_ox_wt(self):
         if self.input_DF.columns[0] == 'Wt. %':
-            self.ox_wt_DF = CC.at2ox_wt(atIndex=self.at_DF.index, 
+            self.ox_wt_DF = CC.at2ox_wt(self,atIndex=self.at_DF.index, 
                                         Atomic=self.at_DF['At. %'])
         return self.ox_wt_DF
     
@@ -168,3 +168,15 @@ class CC:
 
 
 # %%
+
+"""
+
+EC_wt = pd.DataFrame(index = ['O','Si','Mg','Al','Ca','Fe','Ti','Mn','Cr','Na','K'],
+                             data = [48.0,29.7,19.5,1.36,0.17,0.33,0.01,0.03,0.13,1.04,0.09],
+                             columns = ['Wt. %'])
+
+EC = CC(EC_wt)
+EC.get_ox_wt()
+EC.get_at()
+
+"""
