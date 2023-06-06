@@ -76,7 +76,7 @@ def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0):
      Bfeti = 48.48
 
      return np.exp(A0+Xca*Aca+Xmg*Amg+(Xna+Xk)*Anak+Xti*Ati+Xfe*Afe+Xal*Aal+Xfe*Xti*Bfeti)
-     
+
 
 def SCSS_Liu(Tc,Pbar,xFeO,xTiO2,xCaO,xSiO2):
      
