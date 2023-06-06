@@ -65,7 +65,6 @@ def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0):
      
      this relationship is derived from 1atm experiments done at 1400C. The composition is in wt. %.
      '''
-
      
      A0 = -5.018
      Aca = 7.56
@@ -79,7 +78,12 @@ def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0):
      return np.exp(A0+Xca*Aca+Xmg*Amg+(Xna+Xk)*Anak+Xti*Ati+Xfe*Afe+Xal*Aal+Xfe*Xti*Bfeti)
      
 
+def SCSS_Liu(Tc,Pbar,xFeO,xTiO2,xCaO,xSiO2):
      
+     lnxS = -1.76-(0.474*(10e4)/Tc)-0.021*Pbar+5.559*xFeO+2.565*xTiO2+2.709*xCaO-3.192*xSiO2
+     xS = np.exp(lnxS)
+
+     return xS
 
 
 
