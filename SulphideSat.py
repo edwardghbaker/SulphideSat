@@ -79,8 +79,11 @@ def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0):
      return np.exp(A0+Xca*Aca+Xmg*Amg+(Xna+Xk)*Anak+Xti*Ati+Xfe*Afe+Xal*Aal+Xfe*Xti*Bfeti)
      
 
-     
+EC = CC(EC_wt)
+EC_OxWt = EC.get_ox_wt()/100
 
 
 
+# %%
+SCSS_oneill(Xca=EC_OxWt.loc['CaO1.0'][0],Xmg=EC_OxWt.loc['MgO1.0'][0],Xna=EC_OxWt.loc['NaO0.5'][0],Xk=EC_OxWt.loc['KO0.5'][0],Xti=EC_OxWt.loc['TiO2.0'][0],Xfe=EC_OxWt.loc['FeO1.0'][0],Xal=EC_OxWt.loc['AlO1.5'][0])
 # %%
