@@ -10,6 +10,8 @@ EC_wt = pd.DataFrame(index = ['O','Si','Mg','Al','Ca','Fe','Ti','Mn','Cr','Na','
                             data = [48.0,29.7,19.5,1.36,0.17,0.33,0.01,0.03,0.13,1.04,0.09],
                             columns = ['Wt. %'])
 
+
+
 #%%
 
 class SCSS:
@@ -59,13 +61,12 @@ class SCSS:
 
 # %%
 
-def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0):
+def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0,fo2=10**(-11.73),fs2=10**(-2)):
      '''
      This function computes the sulphide capacity (ppm) for a given composition. As reported by O'neill, Hugh S. T. C., and John A. Mavrogenes. 2002. “The Sulfide Capacity and the Sulfur Content at Sulfide Saturation of Silicate Melts at 1400°C and 1 Bar.” Journal of Petrology 43 (6): 1049-87.
      
      this relationship is derived from 1atm experiments done at 1400C. The composition is in wt. %.
      '''
-
      
      A0 = -5.018
      Aca = 7.56
@@ -76,14 +77,30 @@ def SCSS_oneill(Xca=0,Xmg=0,Xna=0,Xk=0,Xti=0,Xfe=0,Xal=0):
      Aal = 1.06
      Bfeti = 48.48
 
-     return np.exp(A0+Xca*Aca+Xmg*Amg+(Xna+Xk)*Anak+Xti*Ati+Xfe*Afe+Xal*Aal+Xfe*Xti*Bfeti)
+
+     return np.exp(A0+Xca*Aca+Xmg*Amg+(Xna+Xk)*Anak+Xti*Ati+Xfe*Afe+Xal*Aal+Xfe*Xti*Bfeti)*((fo2/fs2)**(-1/2))
+
+def CS_approx_Oneill(wtFeO,fo2=1,fs2=1):
+     Cs = 0.0003*(100-wtFeO)*np.exp(0.21*wtFeO)
+     return Cs*((fo2/fs2)**(-1/2))
+
+
+def SCSS_Liu(Tc,Pbar,xFeO,xTiO2,xCaO,xSiO2):
      
+     lnxS = -1.76-(0.474*(10e4)/Tc)-0.021*Pbar+5.559*xFeO+2.565*xTiO2+2.709*xCaO-3.192*xSiO2
+     xS = np.exp(lnxS)
 
+     return xS
+
+
+
+# %%
 EC = CC(EC_wt)
-EC_OxWt = EC.get_ox_wt()/100
+EC_at = EC.get_at()
+EC_ox_wt = EC.get_ox_wt()
 
+SCSS_oneill(EC_at.loc['Ca'][0],EC_at.loc['Mg'][0],EC_at.loc['Na'][0],EC_at.loc['K'][0],EC_at.loc['Ti'][0],EC_at.loc['Fe'][0],EC_at.loc['Al'][0])
 
+CS_approx_Oneill(EC_ox_wt.loc['FeO1.0'][0],10**(-11.73),10**(-2))
 
-# %%
-SCSS_oneill(Xca=EC_OxWt.loc['CaO1.0'][0],Xmg=EC_OxWt.loc['MgO1.0'][0],Xna=EC_OxWt.loc['NaO0.5'][0],Xk=EC_OxWt.loc['KO0.5'][0],Xti=EC_OxWt.loc['TiO2.0'][0],Xfe=EC_OxWt.loc['FeO1.0'][0],Xal=EC_OxWt.loc['AlO1.5'][0])
-# %%
+#%%
